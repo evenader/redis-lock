@@ -83,6 +83,9 @@ func (l *Lock) UnLock(ctx context.Context, key string, expiration time.Duration)
 		因此考虑引入lua脚本
 	*/
 	res, err := l.client.Eval(ctx, luaUnlock, []string{l.key}, l.value).Int64()
+	if err == redis.Nil {
+		return ErrLockNotHold
+	}
 	if err != nil {
 		return err
 	}
