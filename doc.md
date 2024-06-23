@@ -9,3 +9,9 @@
 严格来讲，单元测试不能依赖于任何第三方组件，也即不依赖真实的redis（只有集成测试才用）
 单元测试，我们使用gomock工具
 一个伏笔，代码使用了redis.Cmdable的接口，本质上是为了便于我们mock
+
+## gomock 折腾挺久
+一开始是路径错了
+redis/go-redis才对
+另一方面是mock和mockgen是俩包 都要go get
+最后是mockgen的命令 -destinstain 后面是空格不是等号

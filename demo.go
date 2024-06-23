@@ -40,10 +40,11 @@ type Lock struct {
 	value  string
 }
 
-func newLock(client redis.Cmdable, key string) *Lock {
+func newLock(client redis.Cmdable, key, value string) *Lock {
 	return &Lock{
 		client: client,
 		key:    key,
+		value:  value,
 	}
 }
 
@@ -58,7 +59,7 @@ func (c *Client) TryLock(ctx context.Context, key string, expiration time.Durati
 	if !res {
 		return nil, ErrFailedToPreemptLock
 	}
-	return newLock(c.client, key), nil
+	return newLock(c.client, key, value), nil
 }
 
 func (l *Lock) UnLock(ctx context.Context, key string, expiration time.Duration) error {
